@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Queue With Friends</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_title">Login or Register</string>
+    <string name="submit_button_default">Login</string>
+    <string name="submit_button_register">Register</string>
+
+    <string name="title_activity_room_select">Room Select</string>
+    <string name="title_activity_room_list">Join A Room </string>
+    <string name="room_title">Rooms</string>
+
+    <string name="create_room_title">Create New Room</string>
+    <string name="create_room">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_queue_view">QueueView</string>
+
+    <string name="txt_search">Search Youtube:</string>
+    <string name="btn_search">Search</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_prev">Last</string>
+    <string name="hint_search">Search a Song or Artist</string>
+
+    <string name="context_play_next">Play Next</string>
+    <string name="context_remove">Remove</string>
+    <string name="context_move">Move To...</string>
+
+    <string name="btn_chat_view">Chat</string>
+    <string name="btn_queue_view">Queue</string>
+
+</resources>

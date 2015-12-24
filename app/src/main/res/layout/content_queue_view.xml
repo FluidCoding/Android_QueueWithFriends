@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_queue_view"
+    tools:context="com.fluidcoding.brian.queuewithfriends.QueueView"
+    android:background="#ef050505">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:id="@+id/linearLayout2"
+            android:background="#FF9800"
+            android:paddingTop="15dp">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtSearch"
+                android:layout_gravity="left"
+                android:layout_weight="5"
+                android:hint="@string/hint_search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:maxLength="25"
+                android:maxLines="1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSearch"
+                android:background="@android:drawable/ic_menu_search"
+                android:contentDescription="Search"
+                android:onClick="searchYT" />
+        </LinearLayout>
+
+    <ViewSwitcher
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/viewSwitcher"
+        android:layout_below="@+id/linearLayout2"
+        android:inAnimation="@android:anim/slide_in_left">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewQueues">
+
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/horizontalScrollViewSearchResults"
+                    android:background="#424242"
+                    android:padding="5dp"
+                    android:foregroundGravity="center">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/linearLayoutSearch"
+                        android:gravity="center_vertical|center_horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Tap on Result to add to Queue"
+                            android:gravity="center"
+                            android:id="@+id/textEmptySearch"
+                             />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/horizontalScrollViewQueue"
+                    android:background="#212121"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/queueView"
+                        android:gravity="center_vertical|center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Queue Is Empty"
+                            android:id="@+id/textEmptyQueue"/>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewChat">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:id="@+id/chatWindow"
+                android:background="@color/input_back"
+                android:enabled="false"
+                android:layout_marginBottom="1dp"
+                android:padding="4dp"
+                android:paddingLeft="6dp"
+                android:textColor="@color/colorTextIcons"
+                android:gravity="left|bottom" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtChat"
+                android:textColor="@color/colorTextIcons"
+                android:background="@color/input_back"
+                android:maxLength="120"
+                android:focusable="true"
+                android:singleLine="true"
+                android:imeOptions="actionSend"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:hint="Chat"
+                android:layout_below="@+id/chatWindow" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_menu_send"
+                android:layout_alignRight="@+id/txtChat"
+                android:layout_below="@+id/chatWindow"
+                android:id="@+id/btnSendChat" />
+
+
+        </RelativeLayout>
+    </ViewSwitcher>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_chat_view"
+        android:id="@+id/btnQCSwitch"
+        android:layout_below="@+id/viewSwitcher"
+        android:background="@color/colorSecondaryText"
+        android:textColor="@color/colorPrimaryText"
+        android:elevation="2dp"
+        android:layout_alignParentRight="true"
+
+        android:layout_marginRight="2dp"
+        android:layout_marginLeft="2dp"
+        android:animateLayoutChanges="true"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/controlsView"
+        android:background="#1a1a1a"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_above="@+id/fragYT">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPrevious"
+            android:layout_marginRight="15dp"
+            android:contentDescription="Previous"
+            android:background="@android:drawable/ic_media_previous"
+             />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnPState"
+            android:layout_marginRight="15dp"
+            android:contentDescription="Play"
+            android:background="@android:drawable/ic_media_play" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNext"
+            android:contentDescription="Next"
+            android:background="@android:drawable/ic_media_next"
+             />
+    </LinearLayout>
+
+    <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+            android:id="@+id/fragYT"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="2dp" />
+
+
+</RelativeLayout>
