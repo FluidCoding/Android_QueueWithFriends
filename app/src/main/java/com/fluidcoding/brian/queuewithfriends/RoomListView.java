@@ -73,10 +73,9 @@ public class RoomListView extends AppCompatActivity {
         for(String key: roomList.keySet()){
             roomIDs.add(key);
             roomsToBuild.add(roomList.get(key));
-            Log.d("Room Added: ", key + " : " + roomList.get(key).getRoomTitle());
+            Log.d("Room Added ", key + " : " + roomList.get(key).getRoomTitle());
         }
         adpt = new RoomAdapter(this, roomsToBuild, roomIDs);
-        Log.d("list size ", String.valueOf(roomsToBuild.size()));
         lstRooms = (ListView)findViewById(R.id.listViewRooms);
         lstRooms.setAdapter(adpt);
         lstRooms.setOnItemClickListener(new RoomClickListener());
@@ -94,8 +93,6 @@ public class RoomListView extends AppCompatActivity {
                 createRoom();
             }
         });
-
-
     }
 
     /**
@@ -110,7 +107,7 @@ public class RoomListView extends AppCompatActivity {
         fbRoomRef = new Firebase("https://youtubeq.firebaseio.com/roomList");
 
         // Get a reference for dataListener, so that
-        // i can removeevent listener when activity is changed.
+        // i can remove event listener when activity is changed.
         dataListener = new RoomDataListener();
 
         fbRoomRef.addValueEventListener(dataListener);
@@ -178,17 +175,13 @@ public class RoomListView extends AppCompatActivity {
         }
     }
 
-    // TODO: Move from embeded listener to this?
     class RoomClickListener implements android.widget.AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            Log.d("Position: ", String.valueOf(position));
-            Log.d("id :", String.valueOf(id));
             TextView txtName = (TextView)((LinearLayout)view).findViewById(R.id.txtRoomName);
 
-            Log.d("room name: ", txtName.getText().toString());
-            Log.d("room id: ", txtName.getTag().toString());
+            Log.d("Room Name", txtName.getText().toString());
+            Log.d("Room ID", txtName.getTag().toString());
             // Do real work
             Intent queueIntent = new Intent(getApplicationContext(), QueueView.class);
             queueIntent.putExtra("rID", txtName.getTag().toString());

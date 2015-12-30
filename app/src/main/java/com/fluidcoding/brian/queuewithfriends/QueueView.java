@@ -53,7 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class QueueView extends YouTubeBaseActivity {
-    final String KEY = "[REPLACE THIS WITH KEY]";       // TODO: Abstract this key away :X
+    final String KEY = Auth.API_KEY;    // API KEY as static member variable of Auth
     final int MAX_MESSAGES = 7;  // Limit to chat messages per room
         // UI handles \\
     private ImageButton searchBtn;
@@ -71,6 +71,7 @@ public class QueueView extends YouTubeBaseActivity {
     private LinearLayout searchView;
 
     static int vidIndex = 0;
+    private boolean isJoining = true;
     private String roomID, userName;                                    // Current room name, and logged in user.
 
     private Firebase fbRef, fbChat;                                     // Firebase handles
@@ -109,8 +110,10 @@ public class QueueView extends YouTubeBaseActivity {
         // Retrieve RoomID from parceable
         roomID = getIntent().getStringExtra("rID");
         SharedPreferences loginAuth = getSharedPreferences("auth", 0);
-        userName=loginAuth.getString("uName", "nologin");
+        // Get name from email
+        userName = loginAuth.getString("uName", "nologin");
         userName = userName.substring(0, userName.indexOf("@"));
+        isJoining=true;
 
         Log.d("QueueView: ", "User: " + userName + ", Joined: " + roomID);
 
@@ -207,7 +210,7 @@ public class QueueView extends YouTubeBaseActivity {
         pqVid = (ImageButton)findViewById(R.id.btnPState);
 
         chatMessageList = new LinkedList<>();
-        // Event Listeners
+        // *** Event Listeners
 
         // Support for searching from the enter button on soft keyboard
         searchTxt.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -342,6 +345,7 @@ public class QueueView extends YouTubeBaseActivity {
                 youtubePlayer.setPlayerStateChangeListener(new PlayerPlaybackEventListener());
                 youtubePlayer.setShowFullscreenButton(false);
                 youtubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.MINIMAL);
+                roomJoinSync();
                 youtubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
                     @Override
                     public void onPlaying() {
@@ -349,8 +353,6 @@ public class QueueView extends YouTubeBaseActivity {
                         if(!qL.isPlaying()) {
                             qL.setPlaying(true);
                             fbRef.child("queueList").setValue(qL);
-                            //fbRef.child("queueList/playing").setValue(qL.isPlaying());
-                            //fbRef.child("queueList/index").setValue(qL.getIndex());
                          }
                     }
 
@@ -386,6 +388,13 @@ public class QueueView extends YouTubeBaseActivity {
             }
 
         });
+    }
+
+    public void roomJoinSync(){
+        if(isJoining && qL.getSize()>0) {
+            youtubePlayer.cueVideo(qL.getId(qL.getIndex()));
+            isJoining=false;
+        }
     }
 
     /**
@@ -826,10 +835,8 @@ public class QueueView extends YouTubeBaseActivity {
         protected void onPostExecute(Object o) {
             if(qTxt!=null)
             {
-                //qTxt.setText("Done Query: " + searchIds.size());
                 // Update Search Queue
                 showSearch();
-
             }
             super.onPostExecute(o);
         }
