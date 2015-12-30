@@ -165,7 +165,7 @@ public class RoomListView extends AppCompatActivity {
                 roomIDs.add(d.getKey());
                 roomsToBuild.add(roomList.get(d.getKey()));
 //                    adpt.add(roomList.get(d.getKey()));
-                Log.d("Room Added: ", d.getKey() + " : " + roomList.get(d.getKey()).getRoomTitle());
+                Log.d("Room Added ", d.getKey() + " : " + roomList.get(d.getKey()).getRoomTitle());
             }
         }
 
@@ -190,3 +190,7 @@ public class RoomListView extends AppCompatActivity {
         }
     }
 }
+
+/** TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+    Add Logout, User Data View (Recent Rooms, Profile Name)
+ */

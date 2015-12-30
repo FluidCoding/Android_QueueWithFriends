@@ -75,21 +75,21 @@ public class QueueWithFriends extends AppCompatActivity {
         final String token = loginAuth.getString("token", "nologin");
         final String uID = loginAuth.getString("uID", "nologin");
 
-        Log.d("Login Auth: ", token);
-        Log.d("User Auth: ", uID);
+        Log.d("Login Auth ", token);
+        Log.d("User Auth ", uID);
         // Test the token
         if(!token.equals("nologin")){
             userFBRef.authWithCustomToken(token, new Firebase.AuthResultHandler() {
                 // Continue to room list
                 @Override
                 public void onAuthenticated(AuthData authData) {
-                    Log.d("Auth: ", "Authenticated Success");
+                    Log.d("Auth", "Authenticated Success");
                     startActivity(selectRoom);
                 }
                 // Show login
                 @Override
                 public void onAuthenticationError(FirebaseError firebaseError) {
-                    Log.d("Auth Error:", firebaseError.getMessage());
+                    Log.d("Auth Error", firebaseError.getMessage());
                 }
             });
         }
@@ -127,7 +127,7 @@ public class QueueWithFriends extends AppCompatActivity {
                     new Firebase.AuthResultHandler() {
                         @Override
                         public void onAuthenticated(AuthData authData) {
-                            Log.d("Login Success: ", "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                            Log.d("Login Success ", "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                             // Cache login auth data
                             loginAuth.edit().putString("token", authData.getToken()).commit();
                             loginAuth.edit().putString("uID", authData.getUid()).commit();
@@ -139,7 +139,7 @@ public class QueueWithFriends extends AppCompatActivity {
                         @Override
                         public void onAuthenticationError(FirebaseError firebaseError) {
                             // there was an error
-                            Log.d("Login ERROR: ", firebaseError.getDetails());
+                            Log.d("Login ERROR ", firebaseError.getDetails());
                             Snackbar.make(v, firebaseError.getMessage(), Snackbar.LENGTH_INDEFINITE).show();
                         }
                     });

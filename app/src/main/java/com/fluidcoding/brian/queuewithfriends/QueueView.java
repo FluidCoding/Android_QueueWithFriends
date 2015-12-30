@@ -115,7 +115,7 @@ public class QueueView extends YouTubeBaseActivity {
         userName = userName.substring(0, userName.indexOf("@"));
         isJoining=true;
 
-        Log.d("QueueView: ", "User: " + userName + ", Joined: " + roomID);
+        Log.d("QueueView ", "User: " + userName + ", Joined: " + roomID);
 
         setContentView(R.layout.activity_queue_view);
         initUI();                                       // Hooks component views
@@ -450,13 +450,13 @@ public class QueueView extends YouTubeBaseActivity {
     private class PlayerPlaybackEventListener implements YouTubePlayer.PlayerStateChangeListener{
         @Override
         public void onLoading() {
-            Log.d("QueueView", "Loading...");
+            Log.d("Video ", "Loading...");
         }
 
         @Override
         public void onLoaded(String s) {
             //if auto play on
-            Log.d("QueueView", "Loaded: " + s);
+            Log.d("Video ", "Loaded: " + s);
             youtubePlayer.play();
         }
 
@@ -551,10 +551,9 @@ public class QueueView extends YouTubeBaseActivity {
         @Override
         public void onClick(View v) {
             index = searchView.indexOfChild(v);
-            Log.d("Search Index: ", String.valueOf(index));
-            Log.d("search result: ", searchIds.get(index));
-            Log.d("search result: title: ", searchTitles.get(index));
-            Log.d("height: ", String.valueOf(searchView.getHeight()));
+            Log.d("Search Index ", String.valueOf(index));
+            Log.d("search result ", searchIds.get(index));
+            Log.d("search result- title ", searchTitles.get(index));
 
             // Remove view from search add view to Queue
             qL.addItem(searchIds.get(index), searchThumbUrls.get(index), searchTitles.get(index));
@@ -599,7 +598,7 @@ public class QueueView extends YouTubeBaseActivity {
             vidIndex = queueView.indexOfChild(v);
             qL.setIndex(vidIndex);
             fbRef.child("queueList").setValue(qL);
-            Log.d("Queue Clicked index: ", String.valueOf(vidIndex));
+            Log.d("Queue Clicked index ", String.valueOf(vidIndex));
             youtubePlayer.cueVideo(qL.getVideoIds().get(vidIndex));
         }
     }
@@ -640,8 +639,8 @@ public class QueueView extends YouTubeBaseActivity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        Log.d("CONTEC, ", "Item selected " + item.getTitle().toString());
-        Log.d("C Select: ", String.valueOf(item.getGroupId()));
+        Log.d("Title  ", " selected " + item.getTitle().toString());
+        Log.d("ID  ", String.valueOf(item.getGroupId()));
         int index = item.getGroupId();
         int order = item.getOrder();
         switch(order){
@@ -672,10 +671,10 @@ public class QueueView extends YouTubeBaseActivity {
 
         if(qL!=null && qL.getVideoIds()!=null) {
             for (int i = 0; i < qL.getVideoIds().size(); i++) {
-                Log.d("Queue Showing: ", qL.getVideoIds().get(i));
+                Log.d("Queue Showing ", qL.getVideoIds().get(i));
                 queueThmView.add(new YouTubeThumbnailView(this));   // This presents a possible memory leak
                                                         // Must be cleaned later
-                Log.d("Queue View ADD", qL.getTitles().get(i));
+                Log.d("Queue View ADD ", qL.getTitles().get(i));
                 queueView.addView(queueThmView.get(i));
                 queueThmView.get(i).initialize(KEY, new QueueThumbnailListener());
             }
@@ -729,7 +728,7 @@ public class QueueView extends YouTubeBaseActivity {
                     qL = dataSnapshot.child("queueList").getValue(QueueList.class);
                 }catch(Exception fe){
                     qL = new QueueList();
-                    Log.d("queue: ", "queue is empty.");
+                    Log.d("Queue  ", "queue is empty.");
                 }
 
                 // Update the View IFF there was a change to the
@@ -798,7 +797,7 @@ public class QueueView extends YouTubeBaseActivity {
                     YouTube.Search.List searchList = ytData.search().list("id,snippet");
                     searchList.setKey(KEY);
                     // Get query from ipc ContentValues collection
-                    Log.d("Query: ", queryValues.getAsString("query"));
+                    Log.d("Query ", queryValues.getAsString("query"));
                     searchList.setQ(queryValues.getAsString("query")); //pass this in
                     searchList.setType("video");
                     searchList.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
@@ -808,7 +807,7 @@ public class QueueView extends YouTubeBaseActivity {
                     SearchListResponse searchResponse = searchList.execute();
                     // Structure results in an iterable list
                     List<SearchResult> searchResultList = searchResponse.getItems();
-                    Log.d("BG SearchResults: ", searchResponse.toPrettyString());
+                    Log.d("BG SearchResults ", searchResponse.toPrettyString());
 
                     // Iterate over list build search view
                     int i = 0;
@@ -816,17 +815,17 @@ public class QueueView extends YouTubeBaseActivity {
                         SearchResult vid = searchResultList.get(i);
                         ResourceId rId = vid.getId();
                         if(rId.getKind().equals("youtube#video")){
-                            Log.d("VID: ", rId.getVideoId());
+                            Log.d("VID ", rId.getVideoId());
                             Thumbnail t = vid.getSnippet().getThumbnails().getDefault();
                             searchIds.add(rId.getVideoId());
                             searchTitles.add(vid.getSnippet().getTitle());
                             searchThumbUrls.add(t.getUrl());
                         }
                         i++;
-                        Log.d("I: ", String.valueOf(i));
+                        Log.d("I  ", String.valueOf(i));
                     }
                 } catch (Exception f) {     // TODO: Restrict/narrow this Exception
-                    Log.d("net error", f.getMessage());
+                    Log.d("Net Error", f.getMessage());
                 }
             }
             return null;
@@ -844,13 +843,12 @@ public class QueueView extends YouTubeBaseActivity {
 }
 
 
-// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-/*
+/** TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
      * Add login support for facebook/google+
      * Add logout support
      * Further Abstract out the thumbnail loading process for both search and queue views.
      * Add other thumbnail longclick functionality
-     * Add current video state sync with firebase done but needs support for ads
+     * Add current video state sync with firebase / needs support for ads
      * Possibly keep screen awake perms?
      * Media Volume slider
  */
