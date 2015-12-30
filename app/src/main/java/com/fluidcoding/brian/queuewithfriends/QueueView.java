@@ -767,7 +767,7 @@ public class QueueView extends YouTubeBaseActivity {
         String query;
         ContentValues queryValues;
         EditText qTxt;
-        final Long NUM_SEARCH_RES = 7L;
+        final Long NUM_SEARCH_RES = 9L;
 
         @Override
         protected void onPreExecute(){
